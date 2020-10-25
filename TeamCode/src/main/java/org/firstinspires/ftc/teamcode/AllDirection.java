@@ -102,26 +102,10 @@ public class AllDirection extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
-        double constant1 = 1.0;
+        double constant1 = 0.8;
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-
-
-            if(gamepad1.dpad_down == true && constant1 == 1.0){
-                constant1 = 0.7;
-            }
-
-            else if(gamepad1.dpad_up == true && constant1 == 0.6){
-                constant1 = 1.0;
-            }
-            else{
-
-            }
-
-            //lTrigger = gamepad1.left_trigger;
-            //rTrigger = gamepad1.right_trigger;
-
             int changeMove = 0;
 
             //This moves the base
@@ -154,6 +138,31 @@ public class AllDirection extends LinearOpMode {
                 backleftmotor.setPower(v3*constant1);
                 backrightmotor.setPower(v4*constant1);
             }
+
+
+            int changeInput = 0;
+            if(gamepad1.a){
+                changeInput++;
+            }
+            if((changeInput % 2) != 0){
+                //input.setPower(1.0);
+            }
+            else{
+                //input.setPower(0.0);
+            }
+
+            int changeOutput = 0;
+            if(gamepad1.b){
+                changeOutput++;
+            }
+            if((changeOutput % 2) != 0){
+                //output.setPower(1.0)
+            }
+            else{
+                //output.setPower(0.0);
+            }
+
+            
 
 
 
