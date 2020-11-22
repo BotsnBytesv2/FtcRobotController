@@ -103,6 +103,7 @@ public class AllDirection extends LinearOpMode {
         waitForStart();
         runtime.reset();
         double constant1 = 0.8;
+        
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
@@ -117,20 +118,16 @@ public class AllDirection extends LinearOpMode {
             final double v3 = -r * Math.cos(robotAngle) + rightX;
             final double v4 = r * Math.sin(robotAngle) + rightX;
 
-            frontleftmotor.setPower(-v1*constant1);
-            frontrightmotor.setPower(-v2*constant1);
-            backleftmotor.setPower(-v3*constant1);
-            backrightmotor.setPower(-v4*constant1);
 
             if(gamepad1.x){
                 changeMove++;
             }
 
             if((changeMove % 2) == 0){
-                frontleftmotor.setPower(-v1*constant1);
-                frontrightmotor.setPower(-v2*constant1);
-                backleftmotor.setPower(-v3*constant1);
-                backrightmotor.setPower(-v4*constant1);
+                frontleftmotor.setPower(-v1);
+                frontrightmotor.setPower(-v2);
+                backleftmotor.setPower(-v3);
+                backrightmotor.setPower(-v4);
             }
             else{
                 frontleftmotor.setPower(v1*constant1);
@@ -162,7 +159,38 @@ public class AllDirection extends LinearOpMode {
                 //output.setPower(0.0);
             }
 
-            
+            if(gamepad1.dpad_up){
+                //wobbleArm.setPower(0.7);
+            }
+            else if(gamepad1.dpad_down){
+                //wobbleArm.setPower(-0.8);
+            }
+            else{
+
+            }
+
+            int changeClaw = 0;
+            if(gamepad1.dpad_right){
+                changeClaw++;
+            }
+            if((changeClaw % 2) != 0){
+                //claw.setPosition(1.0)
+            }
+            else{
+                //claw.setPower(0.0);
+            }
+
+
+            int changeTransfer = 0;
+            if(gamepad1.y){
+                changeTransfer++;
+            }
+            if((changeTransfer % 2) != 0){
+                //transfer.setPower(1.0)
+            }
+            else{
+                //transfer.setPower(0.0);
+            }
 
 
 
