@@ -65,6 +65,14 @@ public class AllDirection extends LinearOpMode {
     private DcMotor frontrightmotor = null;
     private DcMotor backleftmotor = null;
     private DcMotor backrightmotor = null;
+    private DcMotor input = null;
+    private DcMotor output = null;
+    private DcMotor wobbleArm = null;
+    private Servo topClaw = null;
+    private Servo bottomClaw = null;
+    private DcMotor transfer = null;
+
+
 
     @Override
     public void runOpMode() {
@@ -77,6 +85,13 @@ public class AllDirection extends LinearOpMode {
         frontrightmotor = hardwareMap.get(DcMotor.class, "frontrightmotor");
         backrightmotor = hardwareMap.get(DcMotor.class, "backrightmotor");
         backleftmotor = hardwareMap.get(DcMotor.class, "backleftmotor");
+        input = hardwareMap.get(DcMotor.class, "frontleftmotor");
+        output = hardwareMap.get(DcMotor.class, "frontrightmotor");
+        wobbleArm = hardwareMap.get(DcMotor.class, "backrightmotor");
+        transfer = hardwareMap.get(DcMotor.class, "backleftmotor");
+        topClaw = hardwareMap.get(Servo.class, "topClaw");
+        bottomClaw = hardwareMap.get(Servo.class, "bottomClaw");
+
 
 
 
@@ -94,8 +109,7 @@ public class AllDirection extends LinearOpMode {
         backleftmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         
-        /*output1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        output2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);*/
+
 
 
 
@@ -174,10 +188,12 @@ public class AllDirection extends LinearOpMode {
                 changeClaw++;
             }
             if((changeClaw % 2) != 0){
-                //claw.setPosition(1.0)
+                //topClaw.setPosition(1.0);
+                //bottomClaw.setPosition(1.0);
             }
             else{
-                //claw.setPower(0.0);
+                //topClaw.setPower(0.0);
+                //bottomClaw.setPower(0.0);
             }
 
 
