@@ -70,7 +70,7 @@ public class AllDirection extends LinearOpMode {
     private DcMotor wobbleArm = null;
     private Servo topClaw = null;
     private Servo bottomClaw = null;
-    private DcMotor transfer = null;
+    private Servo transfer = null;
 
 
 
@@ -81,14 +81,14 @@ public class AllDirection extends LinearOpMode {
 
 
 
-        frontleftmotor = hardwareMap.get(DcMotor.class, "frontleftmotor");
-        frontrightmotor = hardwareMap.get(DcMotor.class, "frontrightmotor");
-        backrightmotor = hardwareMap.get(DcMotor.class, "backrightmotor");
-        backleftmotor = hardwareMap.get(DcMotor.class, "backleftmotor");
-        input = hardwareMap.get(DcMotor.class, "frontleftmotor");
-        output = hardwareMap.get(DcMotor.class, "frontrightmotor");
-        wobbleArm = hardwareMap.get(DcMotor.class, "backrightmotor");
-        transfer = hardwareMap.get(DcMotor.class, "backleftmotor");
+        frontleftmotor = hardwareMap.get(DcMotor.class, "frontleft");
+        frontrightmotor = hardwareMap.get(DcMotor.class, "frontright");
+        backrightmotor = hardwareMap.get(DcMotor.class, "backright");
+        backleftmotor = hardwareMap.get(DcMotor.class, "backleft");
+        input = hardwareMap.get(DcMotor.class, "input");
+        output = hardwareMap.get(DcMotor.class, "output");
+        wobbleArm = hardwareMap.get(DcMotor.class, "wobbleArm");
+        transfer = hardwareMap.get(Servo.class, "transferServo");
         topClaw = hardwareMap.get(Servo.class, "topClaw");
         bottomClaw = hardwareMap.get(Servo.class, "bottomClaw");
 
@@ -100,6 +100,9 @@ public class AllDirection extends LinearOpMode {
         backleftmotor.setPower(0.0);
         backrightmotor.setPower(0.0);
 
+        transfer.setPosition(0.5);
+        topClaw.setPosition(0.5);
+        bottomClaw.setPosition(0.5);
 
 
 
@@ -156,7 +159,7 @@ public class AllDirection extends LinearOpMode {
                 changeInput++;
             }
             if((changeInput % 2) != 0){
-                //input.setPower(1.0);
+                input.setPower(1.0);
             }
             else{
                 //input.setPower(0.0);
@@ -167,17 +170,17 @@ public class AllDirection extends LinearOpMode {
                 changeOutput++;
             }
             if((changeOutput % 2) != 0){
-                //output.setPower(1.0)
+                output.setPower(1.0);
             }
             else{
-                //output.setPower(0.0);
+                output.setPower(0.0);
             }
 
             if(gamepad1.dpad_up){
-                //wobbleArm.setPower(0.7);
+                wobbleArm.setPower(0.3);
             }
             else if(gamepad1.dpad_down){
-                //wobbleArm.setPower(-0.8);
+                wobbleArm.setPower(-0.3);
             }
             else{
 
@@ -188,12 +191,12 @@ public class AllDirection extends LinearOpMode {
                 changeClaw++;
             }
             if((changeClaw % 2) != 0){
-                //topClaw.setPosition(1.0);
-                //bottomClaw.setPosition(1.0);
+                topClaw.setPosition(1.0);
+                bottomClaw.setPosition(1.0);
             }
             else{
-                //topClaw.setPower(0.0);
-                //bottomClaw.setPower(0.0);
+                topClaw.setPosition(0.5);
+                bottomClaw.setPosition(0.5);
             }
 
 
@@ -202,10 +205,10 @@ public class AllDirection extends LinearOpMode {
                 changeTransfer++;
             }
             if((changeTransfer % 2) != 0){
-                //transfer.setPower(1.0)
+                transfer.setPosition(1.0);
             }
             else{
-                //transfer.setPower(0.0);
+                transfer.setPosition(0.3);
             }
 
 
