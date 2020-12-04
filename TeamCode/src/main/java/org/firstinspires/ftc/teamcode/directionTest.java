@@ -56,21 +56,16 @@ import org.firstinspires.ftc.robotcore.external.android.AndroidTextToSpeech;
  **/
 
 
-@TeleOp(name = "AllDirection", group = "Concept")
+@TeleOp(name = "directionTest", group = "Concept")
 
 
-public class AllDirection extends LinearOpMode {
+public class directionTest extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor frontleftmotor = null;
     private DcMotor frontrightmotor = null;
     private DcMotor backleftmotor = null;
     private DcMotor backrightmotor = null;
-    private DcMotor input = null;
-    private DcMotor output = null;
-    private DcMotor wobbleArm = null;
-    private Servo topClaw = null;
-    private Servo bottomClaw = null;
-    private Servo transfer = null;
+
 
 
 
@@ -85,12 +80,6 @@ public class AllDirection extends LinearOpMode {
         frontrightmotor = hardwareMap.get(DcMotor.class, "frontrightmotor");
         backrightmotor = hardwareMap.get(DcMotor.class, "backrightmotor");
         backleftmotor = hardwareMap.get(DcMotor.class, "backleftmotor");
-        input = hardwareMap.get(DcMotor.class, "input");
-        output = hardwareMap.get(DcMotor.class, "output");
-        wobbleArm = hardwareMap.get(DcMotor.class, "wobbleArm");
-        transfer = hardwareMap.get(Servo.class, "transferServo");
-        topClaw = hardwareMap.get(Servo.class, "topClaw");
-        bottomClaw = hardwareMap.get(Servo.class, "bottomClaw");
 
 
 
@@ -101,9 +90,7 @@ public class AllDirection extends LinearOpMode {
         backleftmotor.setPower(0.0);
         backrightmotor.setPower(0.0);
 
-        transfer.setPosition(-0.5);
-        topClaw.setPosition(0.6);
-        bottomClaw.setPosition(0.6);
+
 
 
 
@@ -120,133 +107,37 @@ public class AllDirection extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
-        double constant1 = 0.6;
-        int changeMove = 0;
-        boolean beforeAPressed = false;
-        boolean inputRunning = false;
-        boolean beforeBPressed = false;
-        boolean outputRunning = false;
-        boolean beforeYPressed = false;
-        boolean transferPushing = false;
-        boolean beforeRightPressed = false;
-        boolean clawGrabbing = false;
 
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            
-
-            //This moves the base
-            double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
-            double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
-            double rightX = gamepad1.right_stick_x;
-            final double v1 = -r * Math.sin(robotAngle) + rightX;
-            final double v2 = r * Math.cos(robotAngle) + rightX;
-            final double v3 = -r * Math.cos(robotAngle) + rightX;
-            final double v4 = r * Math.sin(robotAngle) + rightX;
 
 
             if(gamepad1.x){
-                changeMove++;
+                frontleftmotor.setPower(1.0);
+                frontrightmotor.setPower(1.0);
+                backleftmotor.setPower(1.0);
+                backrightmotor.setPower(1.0);
             }
 
-            if((changeMove % 2) == 0){
-                frontleftmotor.setPower(v1);
-                frontrightmotor.setPower(v2);
-                backleftmotor.setPower(v3);
-                backrightmotor.setPower(v4);
+            if(gamepad1.y){
+                frontleftmotor.setPower(-1.0);
+                frontrightmotor.setPower(-1.0);
+                backleftmotor.setPower(-1.0);
+                backrightmotor.setPower(-1.0);
             }
-            else{
-                frontleftmotor.setPower(v1*constant1);
-                frontrightmotor.setPower(v2*constant1);
-                backleftmotor.setPower(v3*constant1);
-                backrightmotor.setPower(v4*constant1);
-            }
-
-
-
-            if (beforeAPressed && beforeAPressed != gamepad1.a) {
-                if(inputRunning) {
-                    input.setPower(1.0);
-                } else {
-                    input.setPower(0.0);
-                }
-                inputRunning = !inputRunning;
-            }
-            beforeAPressed = gamepad1.a;
-
-
-            if (beforeBPressed && beforeBPressed != gamepad1.b) {
-                if(outputRunning) {
-                    output.setPower(1.0);
-                } else {
-                    output.setPower(0.0);
-                }
-                outputRunning = !outputRunning;
-            }
-            beforeBPressed = gamepad1.b;
-
-            if(gamepad1.dpad_up){
-                wobbleArm.setPower(-0.4);
-            }
-            else if(gamepad1.dpad_down){
-                wobbleArm.setPower(0.4);
-            }
-            else{
-                wobbleArm.setPower(-0.04);
+            if(gamepad1.a){
+                frontleftmotor.setPower(0.0);
+                frontrightmotor.setPower(0.0);
+                backleftmotor.setPower(0.0);
+                backrightmotor.setPower(0.0);
             }
 
-            if (beforeRightPressed && beforeRightPressed != gamepad1.dpad_right) {
-                if(clawGrabbing) {
-                    topClaw.setPosition(0.23);
-                    bottomClaw.setPosition(0.2);
-                } else {
-                    topClaw.setPosition(0.6);
-                    bottomClaw.setPosition(0.6);
-                }
-                clawGrabbing = !clawGrabbing;
-            }
-            beforeRightPressed = gamepad1.dpad_right;
-
-            /*if(gamepad1.dpad_right){
-                changeClaw++;
-            }
-            if((changeClaw % 2) != 0){
-                topClaw.setPosition(0.23);
-                bottomClaw.setPosition(0.2);
-            }
-            else{
-                topClaw.setPosition(0.6);
-                bottomClaw.setPosition(0.6);
-            }*/
-
-
-
-            if (beforeYPressed && beforeYPressed != gamepad1.y) {
-                if(transferPushing) {
-                    transfer.setPosition(-0.1);
-                } else {
-                    transfer.setPosition(-0.5);
-                }
-                transferPushing = !transferPushing;
-            }
-            beforeYPressed = gamepad1.y;
-            /*if(gamepad1.y){
-                changeTransfer++;
-            }
-
-            if((changeTransfer % 2) != 0){
-                transfer.setPosition(-0.1);
-            }
-            else{
-                transfer.setPosition(-0.5);
-            }*/
 
 
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Mode", (changeMove%2));
             //telemetry.addData("Motors", "one (%.2f), two (%.2f), servoone (%.2f), servotwo (%.2f)", onePower, twoPower, servo1pos, servo2pos);
             telemetry.update();
         }
