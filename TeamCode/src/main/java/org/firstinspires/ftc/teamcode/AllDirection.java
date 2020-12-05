@@ -101,9 +101,11 @@ public class AllDirection extends LinearOpMode {
         backleftmotor.setPower(0.0);
         backrightmotor.setPower(0.0);
 
-        transfer.setPosition(-0.5);
+
+        // transfer.setPosition((-0.5));
         topClaw.setPosition(0.6);
-        bottomClaw.setPosition(0.6);
+        bottomClaw.setPosition(0.1);
+        transfer.setPosition(0.8);
 
 
 
@@ -122,6 +124,7 @@ public class AllDirection extends LinearOpMode {
         runtime.reset();
         double constant1 = 0.6;
         int changeMove = 0;
+        double transferPosition = 0.1;
         boolean beforeAPressed = false;
         boolean inputRunning = false;
         boolean beforeBPressed = false;
@@ -130,6 +133,7 @@ public class AllDirection extends LinearOpMode {
         boolean transferPushing = false;
         boolean beforeRightPressed = false;
         boolean clawGrabbing = false;
+
 
 
         // run until the end of the match (driver presses STOP)
@@ -167,7 +171,7 @@ public class AllDirection extends LinearOpMode {
 
             if (beforeAPressed && beforeAPressed != gamepad1.a) {
                 if(inputRunning) {
-                    input.setPower(1.0);
+                    input.setPower(0.8);
                 } else {
                     input.setPower(0.0);
                 }
@@ -178,7 +182,7 @@ public class AllDirection extends LinearOpMode {
 
             if (beforeBPressed && beforeBPressed != gamepad1.b) {
                 if(outputRunning) {
-                    output.setPower(1.0);
+                    output.setPower(0.8);
                 } else {
                     output.setPower(0.0);
                 }
@@ -199,10 +203,10 @@ public class AllDirection extends LinearOpMode {
             if (beforeRightPressed && beforeRightPressed != gamepad1.dpad_right) {
                 if(clawGrabbing) {
                     topClaw.setPosition(0.23);
-                    bottomClaw.setPosition(0.2);
+                    bottomClaw.setPosition(0.4);
                 } else {
                     topClaw.setPosition(0.6);
-                    bottomClaw.setPosition(0.6);
+                    bottomClaw.setPosition(0.1);
                 }
                 clawGrabbing = !clawGrabbing;
             }
@@ -223,14 +227,31 @@ public class AllDirection extends LinearOpMode {
 
 
             if (beforeYPressed && beforeYPressed != gamepad1.y) {
-                if(transferPushing) {
-                    transfer.setPosition(-0.1);
+                if(transferPushing){
+                    transfer.setPosition(0.7);
+                    sleep(50);
+                    transfer.setPosition(0.8);
+
                 } else {
-                    transfer.setPosition(-0.5);
+                    transfer.setPosition(0.7);
+                    sleep(50);
+                    transfer.setPosition(0.8);
                 }
                 transferPushing = !transferPushing;
             }
             beforeYPressed = gamepad1.y;
+            if(gamepad1.right_bumper = true){
+
+            }
+            else{
+
+            }
+            if(gamepad1.left_bumper){
+
+            }
+            else{
+
+            }
             /*if(gamepad1.y){
                 changeTransfer++;
             }
