@@ -124,15 +124,18 @@ public class AllDirection extends LinearOpMode {
         runtime.reset();
         double constant1 = 0.6;
         int changeMove = 0;
-        double transferPosition = 0.1;
         boolean beforeAPressed = false;
         boolean inputRunning = false;
         boolean beforeBPressed = false;
         boolean outputRunning = false;
         boolean beforeYPressed = false;
         boolean transferPushing = false;
-        boolean beforeRightPressed = false;
+        boolean beforeRightBPressed = false;
         boolean clawGrabbing = false;
+        double reverse = 1.0;
+        boolean beforeLeftBPressed = false;
+        boolean robotBackwards = false;
+
 
 
 
@@ -155,19 +158,28 @@ public class AllDirection extends LinearOpMode {
             }
 
             if((changeMove % 2) == 0){
-                frontleftmotor.setPower(v1);
-                frontrightmotor.setPower(v2);
-                backleftmotor.setPower(v3);
-                backrightmotor.setPower(v4);
+                frontleftmotor.setPower(v1*reverse);
+                frontrightmotor.setPower(v2*reverse);
+                backleftmotor.setPower(v3*reverse);
+                backrightmotor.setPower(v4*reverse);
             }
             else{
-                frontleftmotor.setPower(v1*constant1);
-                frontrightmotor.setPower(v2*constant1);
-                backleftmotor.setPower(v3*constant1);
-                backrightmotor.setPower(v4*constant1);
+                frontleftmotor.setPower(v1*constant1*reverse);
+                frontrightmotor.setPower(v2*constant1*reverse);
+                backleftmotor.setPower(v3*constant1*reverse);
+                backrightmotor.setPower(v4*constant1*reverse);
             }
 
 
+            if (beforeLeftBPressed && beforeLeftBPressed != gamepad1.left_bumper) {
+                if(robotBackwards) {
+                    reverse = 1.0;
+                } else {
+                    reverse = -1.0;
+                }
+                robotBackwards = !robotBackwards;
+            }
+            beforeLeftBPressed = gamepad1.left_bumper;
 
             if (beforeAPressed && beforeAPressed != gamepad1.a) {
                 if(inputRunning) {
@@ -182,7 +194,7 @@ public class AllDirection extends LinearOpMode {
 
             if (beforeBPressed && beforeBPressed != gamepad1.b) {
                 if(outputRunning) {
-                    output.setPower(0.8);
+                    output.setPower(1.0);
                 } else {
                     output.setPower(0.0);
                 }
@@ -190,39 +202,32 @@ public class AllDirection extends LinearOpMode {
             }
             beforeBPressed = gamepad1.b;
 
+
+
             if(gamepad1.dpad_up){
-                wobbleArm.setPower(-0.6);
+                wobbleArm.setPower(1.0);
             }
             else if(gamepad1.dpad_down){
-                wobbleArm.setPower(0.6);
+                wobbleArm.setPower(-0.6);
             }
             else{
-                wobbleArm.setPower(-0.1);
+                wobbleArm.setPower(0.2);
             }
 
-            if (beforeRightPressed && beforeRightPressed != gamepad1.dpad_right) {
+            if (beforeRightBPressed && beforeRightBPressed != gamepad1.right_bumper) {
                 if(clawGrabbing) {
                     topClaw.setPosition(0.23);
                     bottomClaw.setPosition(0.4);
-                } else {
+                }
+                else {
                     topClaw.setPosition(0.6);
                     bottomClaw.setPosition(0.1);
                 }
                 clawGrabbing = !clawGrabbing;
             }
-            beforeRightPressed = gamepad1.dpad_right;
+            beforeRightBPressed = gamepad1.right_bumper;
 
-            /*if(gamepad1.dpad_right){
-                changeClaw++;
-            }
-            if((changeClaw % 2) != 0){
-                topClaw.setPosition(0.23);
-                bottomClaw.setPosition(0.2);
-            }
-            else{
-                topClaw.setPosition(0.6);
-                bottomClaw.setPosition(0.6);
-            }*/
+
 
 
 
@@ -240,28 +245,10 @@ public class AllDirection extends LinearOpMode {
                 transferPushing = !transferPushing;
             }
             beforeYPressed = gamepad1.y;
-            if(gamepad1.right_bumper = true){
 
-            }
-            else{
 
-            }
-            if(gamepad1.left_bumper){
 
-            }
-            else{
 
-            }
-            /*if(gamepad1.y){
-                changeTransfer++;
-            }
-
-            if((changeTransfer % 2) != 0){
-                transfer.setPosition(-0.1);
-            }
-            else{
-                transfer.setPosition(-0.5);
-            }*/
 
 
 

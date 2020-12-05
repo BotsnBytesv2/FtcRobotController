@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import static org.firstinspires.ftc.teamcode.tensorFlowInit.*;
 
 @Autonomous(name = "TensorFlow Object Detection for ring", group = "LinearOpMode")
-
+@Disabled
 public class tensorflowRingDetection extends LinearOpMode {
 
 
