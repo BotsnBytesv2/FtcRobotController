@@ -191,13 +191,13 @@ public class AllDirection extends LinearOpMode {
             beforeBPressed = gamepad1.b;
 
             if(gamepad1.dpad_up){
-                wobbleArm.setPower(-0.4);
+                wobbleArm.setPower(-0.6);
             }
             else if(gamepad1.dpad_down){
-                wobbleArm.setPower(0.4);
+                wobbleArm.setPower(0.6);
             }
             else{
-                wobbleArm.setPower(-0.04);
+                wobbleArm.setPower(-0.1);
             }
 
             if (beforeRightPressed && beforeRightPressed != gamepad1.dpad_right) {
