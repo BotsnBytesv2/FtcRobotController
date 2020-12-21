@@ -10,18 +10,24 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
-import static org.firstinspires.ftc.teamcode.tensorFlowInit.initTfod;
-import static org.firstinspires.ftc.teamcode.tensorFlowInit.initVuforia;
-import static org.firstinspires.ftc.teamcode.tensorFlowInit.tfod;
+
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
 
 @Autonomous(name = "Auto1205", group = "Concept")
 
 public class Auto1205 extends LinearOpMode {
 
-
+    private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
+    private static final String LABEL_FIRST_ELEMENT = "Quad";
+    private static final String LABEL_SECOND_ELEMENT = "Single";
+    private static final String VUFORIA_KEY = "AUlgfJn/////AAABmSmPlnjIykFgiXuG0cnJgVxgqg0iEKJga4zsTXBAAuj+tza9T8jqbfj+p6P52eZ5mUih3cbSRZXpLptKQIbkKdFZ/Bu+2DdMRHHi5jgc26PeUDgsttVKtAT+nET3SfAeI+XUvqbBoknhmjURqIyG0hrJZwDutq5FL+6pz54WC34kOciNuE3kWzsCiyYxeFbejWexFeYWbxN1DJd27Im1wElw2vDWWjq4j2rcFJQow98/HrqMV4Qen6DbPHa6pTHAoxAmIoQzaowqb/m3BOdeF1pxMQUqbLXk6S195f7V4sxDhmD9fTFKi8+5kzpj6pE6Km6Svce5m8xGEQz4LcOIwu7OPxh+yIheNDQ7mnLWdOvd";
+    private static VuforiaLocalizer vuforia;
+    private static TFObjectDetector tfod;
 
 
 
@@ -38,7 +44,7 @@ public class Auto1205 extends LinearOpMode {
     private Servo topClaw = null;
     private Servo bottomClaw = null;
     private Servo transfer = null;
-    public int numberOfRings;
+    public int numberOfRings = 0;
 
 
 
@@ -71,18 +77,16 @@ public class Auto1205 extends LinearOpMode {
         bottomClaw.setPosition(0.4);
         transfer.setPosition(0.8);
 
-        initVuforia();
+        /*initVuforia();
         initTfod();
         if (tfod != null) {
             tfod.activate();
-        }
+        }*/
         waitForStart();
-        move(5, "f");
-        move(25, "f");
-        move(13, "r");
 
 
-        if (opModeIsActive()) {
+
+        /*if (opModeIsActive()) {
             while (opModeIsActive()) {
                 if (tfod != null) {
                     List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
@@ -107,16 +111,16 @@ public class Auto1205 extends LinearOpMode {
 
         if (tfod != null) {
             tfod.shutdown();
-        }
-        if(numberOfRings == 0){
-            path1();
-        }
-        if(numberOfRings == 1){
+        }*/
+        move(30, "f");
+        move(13, "r");
+        path1();
+        /*if(numberOfRings == 1){
             path2();
         }
         if(numberOfRings == 4){
             path3();
-        }
+        }*/
 
 
 
@@ -167,10 +171,10 @@ public class Auto1205 extends LinearOpMode {
     }
 
     private void straferight(long sleep) {
-        frontleftmotor.setPower(0.515);
-        backleftmotor.setPower(-0.5);
-        frontrightmotor.setPower(0.515);
-        backrightmotor.setPower(-0.5);
+        frontleftmotor.setPower(0.5);
+        backleftmotor.setPower(-0.515);
+        frontrightmotor.setPower(0.5);
+        backrightmotor.setPower(-0.515);
         sleep(sleep);
     }
 
@@ -193,6 +197,7 @@ public class Auto1205 extends LinearOpMode {
         move(25, "r");
         move(11, "b");
         output.setPower(1.0);
+        turn("r", 180);
         transfer.setPosition(0.7);
         sleep(50);
         transfer.setPosition(0.8);
@@ -273,6 +278,32 @@ public class Auto1205 extends LinearOpMode {
             spinright((long)(Math.rint(degrees * 11)));
         }
         stopMotors();
+    }
+    private void initVuforia() {
+        /*
+         * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
+         */
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+
+        parameters.vuforiaLicenseKey = VUFORIA_KEY;
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+
+        //  Instantiate the Vuforia engine
+        vuforia = ClassFactory.getInstance().createVuforia(parameters);
+
+        // Loading trackables is not necessary for the TensorFlow Object Detection engine.
+    }
+
+    /**
+     * Initialize the TensorFlow Object Detection engine.
+     */
+    private void initTfod() {
+        int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
+                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
+        tfodParameters.minResultConfidence = 0.8f;
+        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
+        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
     }
 
 }

@@ -10,8 +10,7 @@ public class tensorFlowInit {
     public static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
     public static final String LABEL_FIRST_ELEMENT = "Quad";
     public static final String LABEL_SECOND_ELEMENT = "Single";
-    public static final String VUFORIA_KEY =
-            "AUlgfJn/////AAABmSmPlnjIykFgiXuG0cnJgVxgqg0iEKJga4zsTXBAAuj+tza9T8jqbfj+p6P52eZ5mUih3cbSRZXpLptKQIbkKdFZ/Bu+2DdMRHHi5jgc26PeUDgsttVKtAT+nET3SfAeI+XUvqbBoknhmjURqIyG0hrJZwDutq5FL+6pz54WC34kOciNuE3kWzsCiyYxeFbejWexFeYWbxN1DJd27Im1wElw2vDWWjq4j2rcFJQow98/HrqMV4Qen6DbPHa6pTHAoxAmIoQzaowqb/m3BOdeF1pxMQUqbLXk6S195f7V4sxDhmD9fTFKi8+5kzpj6pE6Km6Svce5m8xGEQz4LcOIwu7OPxh+yIheNDQ7mnLWdOvd";
+    public static final String VUFORIA_KEY = "AUlgfJn/////AAABmSmPlnjIykFgiXuG0cnJgVxgqg0iEKJga4zsTXBAAuj+tza9T8jqbfj+p6P52eZ5mUih3cbSRZXpLptKQIbkKdFZ/Bu+2DdMRHHi5jgc26PeUDgsttVKtAT+nET3SfAeI+XUvqbBoknhmjURqIyG0hrJZwDutq5FL+6pz54WC34kOciNuE3kWzsCiyYxeFbejWexFeYWbxN1DJd27Im1wElw2vDWWjq4j2rcFJQow98/HrqMV4Qen6DbPHa6pTHAoxAmIoQzaowqb/m3BOdeF1pxMQUqbLXk6S195f7V4sxDhmD9fTFKi8+5kzpj6pE6Km6Svce5m8xGEQz4LcOIwu7OPxh+yIheNDQ7mnLWdOvd";
     public static VuforiaLocalizer vuforia;
     public static TFObjectDetector tfod;
 

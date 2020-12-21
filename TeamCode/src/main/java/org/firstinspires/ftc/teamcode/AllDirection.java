@@ -68,6 +68,7 @@ public class AllDirection extends LinearOpMode {
     private DcMotor input = null;
     private DcMotor output = null;
     private DcMotor wobbleArm = null;
+    private DcMotor input2 = null;
     private Servo topClaw = null;
     private Servo bottomClaw = null;
     private Servo transfer = null;
@@ -91,6 +92,7 @@ public class AllDirection extends LinearOpMode {
         transfer = hardwareMap.get(Servo.class, "transferServo");
         topClaw = hardwareMap.get(Servo.class, "topClaw");
         bottomClaw = hardwareMap.get(Servo.class, "bottomClaw");
+        input2 = hardwareMap.get(DcMotor.class, "input2");
 
 
 
@@ -183,9 +185,11 @@ public class AllDirection extends LinearOpMode {
 
             if (beforeAPressed && beforeAPressed != gamepad1.a) {
                 if(inputRunning) {
-                    input.setPower(0.8);
+                    input.setPower(0.7);
+                    input2.setPower(1.0);
                 } else {
                     input.setPower(0.0);
+                    input2.setPower(0.0);
                 }
                 inputRunning = !inputRunning;
             }
